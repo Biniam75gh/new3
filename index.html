@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BGE Smart Repair</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f4; margin: 0; padding-bottom: 100px; }
+        .header { background: #002d72; color: white; padding: 20px; text-align: left; border-radius: 0 0 25px 25px; }
+        .logo { width: 140px; display: block; margin: 0 auto 10px auto; }
+        .call-btn { background: #007bff; color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; display: inline-block; margin-left: 20px; font-weight: bold; font-size: 14px; }
+        
+        .page { display: none; padding: 20px; }
+        .active-page { display: block; }
+        
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .card { background: white; padding: 15px; border-radius: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; font-size: 13px; font-weight: bold; }
+        
+        .section-box { background: white; padding: 20px; border-radius: 15px; margin-top: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .list-item { border-bottom: 1px solid #eee; padding: 10px 0; color: #333; font-weight: bold; }
+        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 15px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.2); z-index: 9999; }
+        .nav-item { text-align: center; font-size: 12px; font-weight: bold; cursor: pointer; color: #002d72; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="1000020924.png" class="logo" alt="Logo">
+        <a href="tel:+251918427112" class="call-btn">CALL NOW</a>
+    </div>
+
+    <div id="home" class="page active-page">
+        <div class="grid">
+            <div class="card" onclick="showDetail('tv')">📺<br>TV</div>
+            <div class="card" onclick="showDetail('fridge')">❄️<br>Fridge</div>
+            <div class="card" onclick="showDetail('laundry')">🧺<br>Laundry</div>
+            <div class="card" onclick="showDetail('solar')">☀️<br>Solar</div>
+            <div class="card" onclick="showDetail('mobile')">📱<br>Mobile</div>
+            <div class="card" onclick="showDetail('other')">📦<br>Other</div>
+        </div>
+        <div id="details" class="section-box" style="display:none;">
+            <h3 id="service-title" style="color:#002d72;"></h3>
+            <div id="list-content"></div>
+        </div>
+    </div>
+
+    <div id="products" class="page">
+        <div class="section-box">
+            <h2 style="color:#25d366;">የሚሸጡ እቃዎች</h2>
+            <div id="product-list"></div>
+        </div>
+    </div>
+
+    <div id="contact" class="page">
+        <div class="section-box" style="text-align:center;">
+            <h2>ያግኙን</h2>
+            <a href="https://wa.me/251918427112" style="display:block; background:#25d366; color:white; padding:15px; border-radius:10px; margin:10px 0; text-decoration:none;">በዋትሳፕ ያግኙን</a>
+            <a href="tel:+251918427112" style="display:block; background:#002d72; color:white; padding:15px; border-radius:10px; text-decoration:none;">ስልክ: +251 91 842 7112</a>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="showPage('home')">🏠<br>Home</div>
+        <div class="nav-item" onclick="showPage('products')">📦<br>Products</div>
+        <div class="nav-item" onclick="alert('Bookings ገጽ በቅርቡ ይመጣል')">📅<br>Bookings</div>
+        <div class="nav-item" onclick="showPage('contact')">📞<br>Contact</div>
+    </div>
+
+    <script>
+        const serviceData = {
+            tv: ["1. ድምፅ ኖሮ ምስል የሌለው", "2. ቀይ መስመር የሚያሳይ", "3. ምስል ኖሮ ድምፅ የሌለው", "4. ሶኬት ተሰክቶ ምንም አይነት ላይት የማያሳይ", "5. ስክሪኑ ላይ የተደራረበ መስመር(የስክሪን ብልሽት)"],
+            fridge: ["1. ቅዝቃዜ መቀነስ", "2. የውሃ መፍሰስ", "3. የበር መዘጋት ችግር"],
+            laundry: ["1. ውሃ መሙላት አለመቻል", "2. መሽከርከር አለመቻል"],
+            solar: ["1. የፓነል ጽዳት", "2. የባትሪ አቅም መመዘን"],
+            mobile: ["1. ስክሪን መቀየር", "2. ባትሪ መጥፋት"],
+            other: ["1. የኤሌክትሪክ መስመር ዝርጋታና ጥገና", "2. ኦቭን እና ተዛማጅ የሆኑትን"]
+        };
+
+        const productsData = [
+            { id: 1, name: "55 ኢንች TV", price: "45000" },
+            { id: 2, name: "65 ኢንች 4K Smart TV", price: "75000" },
+            { id: 3, name: "Samsung Galaxy S25 Ultra", price: "120000" },
+            { id: 4, name: "የቲቪ መደርደሪያ", price: "8500" },
+            { id: 5, name: "ኦማስካ ቦርሳ (OMASKA Backpack)", price: "2500" }
+        ];
+
+        function showDetail(key) {
+            document.getElementById('details').style.display = 'block';
+            document.getElementById('service-title').innerText = key.toUpperCase() + " ጥገና";
+            document.getElementById('list-content').innerHTML = serviceData[key].map(item => `<div class="list-item">${item}</div>`).join('');
+        }
+
+        function loadProducts() {
+            const container = document.getElementById('product-list');
+            container.innerHTML = productsData.map(p => `
+                <div class="section-box" style="border:1px solid #ddd;">
+                    <h4>${p.name} - ${p.price} ETB</h4>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <a href="https://wa.me/251918427112?text=ስለ ${p.name} መረጃ እፈልጋለሁ" style="background:#25d366; padding:8px; border-radius:5px; color:white; text-decoration:none; font-size:12px;">ዋትሳፕ</a>
+                        <a href="tel:*127*1*251918427112*${p.price}#" style="background:#0055a4; padding:8px; border-radius:5px; color:white; text-decoration:none; font-size:12px;">በቴሌብር ክፍያ ይፈፅሙ</a>
+                    </div>
+                    <textarea id="comment-${p.id}" placeholder="አስተያየት ይስጡ..." style="width:100%; margin-top:10px; box-sizing:border-box;"></textarea>
+                    <button onclick="sendComment(${p.id}, '${p.name}')" style="margin-top:5px; padding:5px 10px; cursor:pointer;">አስተያየቱን ላክ</button>
+                </div>
+            `).join('');
+        }
+
+        function sendComment(id, name) {
+            const comment = document.getElementById(`comment-${id}`).value;
+            if(comment.trim() !== "") {
+                window.open(`https://wa.me/251918427112?text=ስለ ${name} የተሰጠ አስተያየት፦ ${comment}`, '_blank');
+            } else {
+                alert("እባክዎ አስተያየት ይጻፉ");
+            }
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+            document.getElementById(pageId).classList.add('active-page');
+            document.getElementById('details').style.display = 'none';
+        }
+
+        loadProducts();
+    </script>
+</body>
+</html>
