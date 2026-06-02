@@ -7,8 +7,9 @@
     <style>
         body { font-family: sans-serif; background-color: #f4f4f4; margin: 0; padding-bottom: 100px; }
         .header { background: #002d72; color: white; padding: 20px; text-align: center; border-radius: 0 0 25px 25px; }
-        .logo { width: 100%; max-width: 300px; height: auto; display: block; margin: 0 auto 15px auto; }
-        .call-btn { background: #0084ff; color: white; padding: 10px 40px; border-radius: 20px; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 10px; }
+        .logo { width: 90%; max-width: 600px; height: auto; display: block; margin: 0 auto 15px auto; }
+        .call-container { display: flex; justify-content: flex-start; padding-left: 20px; margin-bottom: 15px; }
+        .call-btn { background: #0084ff; color: white; padding: 4px 12px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 11px; }
         .page { display: none; padding: 20px; }
         .active-page { display: block; }
         .section-box { background: white; padding: 20px; border-radius: 15px; margin-top: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -23,7 +24,7 @@
 
     <div class="header">
         <img src="1000020924.png" class="logo" alt="Logo">
-        <a href="tel:0918427112" class="call-btn">CALL NOW</a>
+        <div class="call-container"><a href="tel:0918427112" class="call-btn">CALL NOW</a></div>
     </div>
 
     <div id="home" class="page active-page">
@@ -37,13 +38,8 @@
         </div>
     </div>
 
-    <div id="products" class="page">
-        <div id="product-list"></div>
-    </div>
-
-    <div id="form-page" class="page">
-        <div class="section-box" id="form-content"></div>
-    </div>
+    <div id="products" class="page"><div id="product-list"></div></div>
+    <div id="form-page" class="page"><div class="section-box" id="form-content"></div></div>
 
     <div class="whatsapp-float">💬</div>
 
@@ -55,12 +51,10 @@
     </div>
 
     <script>
-        // የምርት ዝርዝር
         const productsData = [
             { id: 1, name: "Samsung Galaxy S25 Ultra", price: "120000", image: "1000021034.jpg" },
             { id: 2, name: "55 ኢንች TV", price: "45000", image: "1000020885.jpg" },
-            { id: 3, name: "65 ኢንች 4K Smart TV", price: "75000", image: "1000020886.jpg" },
-            { id: 4, name: "የጉዞ ቦርሳ (Backpack)", price: "1600", image: "1000020889.jpg" }
+            { id: 3, name: "65 ኢንች 4K Smart TV", price: "75000", image: "1000020886.jpg" }
         ];
 
         function loadProducts() {
@@ -75,57 +69,57 @@
             showPage('products');
         }
 
-        function getLocation() {
-            const locationInput = document.getElementById("locationInput");
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((pos) => {
-                    locationInput.value = `https://maps.google.com/?q=${pos.coords.latitude},${pos.coords.longitude}`;
-                    alert("አካባቢዎ በተሳካ ሁኔታ ተገኝቷል!");
-                }, () => { alert("አካባቢዎን መፈለግ አልተቻለም"); });
-            }
-        }
-
-        function showThankYou() {
-            document.getElementById('form-content').innerHTML = `
-                <div style="text-align:center; padding:20px;">
-                    <h2 style="color:green;">✔ ክፍያዎ ደርሶናል!</h2>
-                    <p>BGEን ስለመረጡ እናመሰግናለን። በቅርቡ እናገኝዎታለን።</p>
-                    <button onclick="showPage('home')" style="padding:10px;">ወደ መጀመሪያው ገጽ ይመለሱ</button>
-                </div>
-            `;
-        }
-
         function openOrderForm(name, price) {
             document.getElementById('form-content').innerHTML = `
-                <h2>የግዢ ማረጋገጫ</h2>
-                <form action="https://formspree.io/f/xbdbbpkv" method="POST" enctype="multipart/form-data" onsubmit="setTimeout(showThankYou, 1000)">
-                    <input type="hidden" name="Order" value="${name}">
-                    <input type="text" name="FullName" placeholder="ሙሉ ስም" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
+                <h2>ግዢን ይፈጽሙ (${name})</h2>
+                <p><b>ክፍያ ይፈጽሙ (Biniam Girma):</b><br>CBE: 1000233582817 | BOA: 37540676 | Telebirr: 0918427112</p>
+                <form action="https://formspree.io/f/xbdbbpkv" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="Product" value="${name}">
+                    <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
                     <input type="text" name="Address" placeholder="ከተማ እና አድራሻ" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
                     <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <input type="text" id="locationInput" name="Location" placeholder="የቦታ መገኛ (Location Link)" required style="width:90%; padding:10px; margin-bottom:5px;"><br>
-                    <button type="button" onclick="getLocation()" style="width:90%; background:#f0f0f0; padding:10px; margin-bottom:10px;">አካባቢዬን በራስ-ሰር ይፈልጉ</button><br>
-                    <input type="file" name="Screenshot" accept="image/*" required style="margin-bottom:10px;"><br>
-                    <button type="submit" style="width:100%; background:#25d366; color:white; padding:15px; border:none; border-radius:5px;">ግዢን ይላኩ</button>
+                    <input type="text" name="Location" placeholder="የቦታ መገኛ (Location Link)" style="width:90%; padding:10px; margin-bottom:10px;"><br>
+                    <label>የክፍያ ደረሰኝ (Screenshot):</label><br>
+                    <input type="file" name="PaymentReceipt" accept="image/*" required style="width:90%; margin-bottom:10px;"><br>
+                    <button type="submit" style="width:100%; background:#28a745; color:white; padding:15px; border:none; border-radius:5px;">ግዢን ይላኩ</button>
                 </form>
+                <button onclick="showPage('products')" style="margin-top:10px; padding:10px; width:100%;">ወደ ኋላ ይመለሱ</button>
             `;
             showPage('form-page');
         }
 
-        function openRepairForm(sName) {
-            document.getElementById('form-content').innerHTML = `
-                <h2>${sName} ጥገና</h2>
-                <form action="https://formspree.io/f/xbdbbpkv" method="POST" onsubmit="alert('የጥገና ጥያቄዎ ደርሶናል!')">
+        function openRepairForm(serviceName) {
+            let content = `<h2>${serviceName} ጥገና</h2>`;
+            const issues = {
+                'TV': ["ድምፅ ኖሮ ምስል የሌለው", "ቀይ መብራት እየበራ የማይሰራ", "ምስል ኖሮ ድምፅ የሌለው", "ስክሪን ተሰንጥቆ ምንም የማይታይ", "የአንቴና ብልሽት", "ችግሩ ያልተጠቀሰ (ሌላ)"],
+                'Fridge': ["የማይቀዘቅዝ", "ውሃ የሚያፈስ", "ድምፅ የሚያሰማ", "በሩ የማይዘጋ", "አይበራም", "ችግሩ ያልተጠቀሰ (ሌላ)"],
+                'Laundry': ["የማይሽከረከር", "ውሃ የማይሞላ", "የማይለቅ", "ከፍተኛ ድምፅ የሚያሰማ", "የኤሌክትሪክ ብልሽት", "ችግሩ ያልተጠቀሰ (ሌላ)"],
+                'Solar': ["ባትሪ የማይይዝ", "የማይሞላ", "ኢንቨርተር ብልሽት", "የፓናል ችግር", "የኬብል ግንኙነት", "ችግሩ ያልተጠቀሰ (ሌላ)"],
+                'Mobile': ["ስክሪን የተሰበረ", "ቻርጅ የማይይዝ", "ድምፅ የማይሰማ", "ባትሪ የሚያልቅ", "የሶፍትዌር ችግር", "ችግሩ ያልተጠቀሰ (ሌላ)"],
+                'Other': ["የቤት እቃዎች ጥገና", "የኤሌክትሪክ ብልሽት", "ሌላ ችግር"]
+            };
+
+            content += `
+                <form action="https://formspree.io/f/xbdbbpkv" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="Service" value="${serviceName}">
+                    <select name="Issue" required style="width:90%; padding:10px; margin-bottom:10px;">
+                        ${issues[serviceName].map(item => `<option value="${item}">${item}</option>`).join('')}
+                    </select><br>
                     <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <button type="submit" style="width:100%; background:#002d72; color:white; padding:15px;">ጥገና ይላኩ</button>
+                    <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
+                    <label>የችግሩን ምስል ያያይዙ:</label><br>
+                    <input type="file" name="Image" accept="image/*" style="width:90%; margin-bottom:10px;"><br>
+                    <button type="submit" style="width:100%; background:#002d72; color:white; padding:15px; border:none; border-radius:5px;">ጥገና ይላኩ</button>
                 </form>
+                <button onclick="showPage('home')" style="margin-top:10px; padding:10px; width:100%;">ወደ ኋላ ይመለሱ</button>
             `;
+            document.getElementById('form-content').innerHTML = content;
             showPage('form-page');
         }
 
-        function showPage(id) {
+        function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-            document.getElementById(id).classList.add('active-page');
+            document.getElementById(pageId).classList.add('active-page');
         }
     </script>
 </body>
