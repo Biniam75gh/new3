@@ -13,8 +13,8 @@
         body { font-family: sans-serif; background-color: #f4f4f4; margin: 0; padding-bottom: 100px; }
         
         /* Header style */
-        .header { background: var(--brand-color); color: white; padding: 20px 0 10px 0; text-align: center; border-radius: 0 0 25px 25px; }
-        .logo { width: 90%; max-width: 600px; height: auto; display: block; margin: 0 auto 5px auto; }
+        .header { background: var(--brand-color); color: white; padding: 10px 0 5px 0; text-align: center; border-radius: 0 0 20px 20px; }
+        .logo { width: 100%; max-width: 700px; height: auto; display: block; margin: 0 auto 5px auto; }
         .call-container { display: flex; justify-content: flex-start; padding-left: 20px; margin-bottom: 15px; }
         .call-btn { background: #0084ff; color: white; padding: 4px 12px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 11px; }
         
@@ -27,7 +27,7 @@
             text-align: center; 
             box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
             cursor: pointer; 
-            font-size: 16px; 
+            font-size: 14px; 
             font-weight: bold; 
         }
         .card::before { display: block; font-size: 32px; margin-bottom: 8px; } 
@@ -86,7 +86,7 @@
                 <div class="section-box">
                     <img src="${p.image}" style="width:100%; border-radius:10px;">
                     <h3>${p.name} - ${p.price} ETB</h3>
-                    <button onclick="openOrderForm('${p.name}', '${p.price}')" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">ግዢን ይፈጽሙ</button>
+                    <button onclick="openOrderForm('${p.name}', '${p.price}')" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">ግዢ ይፈጽሙ</button>
                 </div>
             `).join('');
             showPage('products');
