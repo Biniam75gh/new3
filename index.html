@@ -15,9 +15,11 @@
         .section-box { background: white; padding: 20px; border-radius: 15px; margin-top: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
         .card { background: white; padding: 15px; border-radius: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; font-size: 14px; font-weight: bold; }
-        /* የታችኛው ክፍል ቀለም ከላይኛው ጋር እንዲመሳሰል ተደረገ */
+        
+        /* የዳሰሳ አሞሌ (Navigation) ቀለም አስተካክያለሁ */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #002d72; display: flex; justify-content: space-around; padding: 15px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 9999; }
         .nav-item { text-align: center; font-size: 12px; font-weight: bold; cursor: pointer; color: white; }
+        
         .whatsapp-float { position: fixed; bottom: 80px; right: 20px; background: #25d366; color: white; padding: 15px; border-radius: 50%; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 9998; }
     </style>
 </head>
@@ -72,12 +74,12 @@
 
         function openOrderForm(name, price) {
             document.getElementById('form-content').innerHTML = `
-                <h2>ግዢ ይፈጽሙ (${name})</h2>
+                <h2>ግዢን ይፈጽሙ (${name})</h2>
                 <p><b>ክፍያ ይፈጽሙ (Biniam Girma):</b><br>CBE: 1000233582817 | BOA: 37540676 | Telebirr: 0918427112</p>
                 <form action="https://formspree.io/f/xbdbbpkv" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="Product" value="${name}">
                     <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <input type="text" name="Address" placeholder="አድራሻ (ከተማ)" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
+                    <input type="text" name="Address" placeholder="ከተማ እና አድራሻ" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
                     <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
                     <input type="text" name="Location" placeholder="የቦታ መገኛ (Location Link)" style="width:90%; padding:10px; margin-bottom:10px;"><br>
                     <label>የክፍያ ደረሰኝ (Screenshot):</label><br>
