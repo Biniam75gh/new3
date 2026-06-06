@@ -27,7 +27,7 @@
             text-align: center; 
             box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
             cursor: pointer; 
-            font-size: 14px; 
+            font-size: 16px; 
             font-weight: bold; 
         }
         .card::before { display: block; font-size: 32px; margin-bottom: 8px; } 
@@ -86,7 +86,7 @@
                 <div class="section-box">
                     <img src="${p.image}" style="width:100%; border-radius:10px;">
                     <h3>${p.name} - ${p.price} ETB</h3>
-                    <button onclick="openOrderForm('${p.name}', '${p.price}')" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">ግዢ ይፈጽሙ</button>
+                    <button onclick="openOrderForm('${p.name}', '${p.price}')" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">ግዢን ይፈጽሙ</button>
                 </div>
             `).join('');
             showPage('products');
@@ -102,11 +102,9 @@
                     <input type="text" name="Address" placeholder="ከተማ እና አድራሻ" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
                     <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
                     <input type="text" name="Location" placeholder="የቦታ መገኛ (Location Link)" style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <label>የክፍያ ደረሰኝ (Screenshot):</label><br>
-                    <input type="file" name="PaymentReceipt" accept="image/*" required style="width:90%; margin-bottom:10px;"><br>
-                    <button type="submit" style="width:100%; background:#28a745; color:white; padding:15px; border:none; border-radius:5px;">ግዢን ይላኩ</button>
+                    <button type="submit" style="width:100%; background:#28a745; color:white; padding:15px; border:none; border-radius:5px;">ግዢ ይፈፅሙ</button>
                 </form>
-                <button onclick="showPage('products')" style="margin-top:10px; padding:10px; width:100%;">ወደ ኋላ ይመለሱ</button>
+                <button onclick="showPage('products')" style="margin-top:10px; padding:10px; width:100%;">Back Menu</button>
             `;
             showPage('form-page');
         }
@@ -130,11 +128,10 @@
                     </select><br>
                     <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
                     <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <label>የችግሩን ምስል ያያይዙ:</label><br>
-                    <input type="file" name="Image" accept="image/*" style="width:90%; margin-bottom:10px;"><br>
-                    <button type="submit" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">ጥገና ይላኩ</button>
+                    <input type="text" name="Address" placeholder="አድራሻ(ከተማ)" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
+                    <button type="submit" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">sent</button>
                 </form>
-                <button onclick="showPage('home')" style="margin-top:10px; padding:10px; width:100%;">ወደ ኋላ ይመለሱ</button>
+                <button onclick="showPage('home')" style="margin-top:10px; padding:10px; width:100%;">Back Menu</button>
             `;
             document.getElementById('form-content').innerHTML = content;
             showPage('form-page');
@@ -144,6 +141,19 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
             document.getElementById(pageId).classList.add('active-page');
         }
+    </script>...
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/62798f1bb0d10b6f3e7160e7/1g2lde1gq';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
     </script>
+    <!--End of Tawk.to Script-->
 </body>
 </html>
