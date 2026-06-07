@@ -59,29 +59,18 @@
             <div class="card" onclick="openRepairForm('Mobile')">📱<br>Mobile</div>
             <div class="card" onclick="openRepairForm('Other')">📦<br>Other</div>
         </div>
-</div>
-
-<button onclick="showPage('products')" style="width: 100%; padding: 15px; background-color: #f8f9fa; border: 1px solid #ccc; cursor: pointer; font-size: 18px; margin-top: 10px;">
-    የምርቶች ዝርዝር ይመልከቱ
-</button>
-
-<div id="form-page" class="page"></div>
-
-<div class="bottom-nav">
-    <div class="nav-item" onclick="showPage('home')">
-        🏠<br>Home
     </div>
-    <div class="nav-item" onclick="showPage('products'); loadProducts();">
-        📦<br>Products
-    </div>
-    <div class="nav-item" onclick="alert('Comingsoon')">
-        📅<br>Bookings
-    </div>
-    <a href="https://wa.me/251918427112" class="nav-item" style="text-decoration:none; color:inherit;">
-        💬<br>Contact
-    </a>
-</div>
 
+    <div id="products" class="page"><div id="product-list"></div></div>
+    <div id="form-page" class="page"><div class="section-box" id="form-content"></div></div>
+
+
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="showPage('home')">🏠<br>Home</div>
+        <div class="nav-item" onclick="showPage('products'); loadProducts();">📦<br>Products</div>
+        <div class="nav-item" onclick="alert('Comingsoon')">📅<br>Bookings</div>
+  <a href="https://wa.me/251918427112" class="nav-item" style="text-decoration:none; color:white;">📞<br>Contact</a>
+    </div>
 
     <script>
         const productsData = [
@@ -97,36 +86,32 @@
                     <img src="${p.image}" style="width:100%; border-radius:10px;">
                     <h3>${p.name} - ${p.price} ETB</h3>
                     <button onclick="openOrderForm('${p.name}', '${p.price}')" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">ግዥ ይፈጽሙ</button>
-                </div>function openOrderForm(name, price) {
-    const orderNumber = "BGE-" + Math.floor(10000 + Math.random() * 90000);
-    document.getElementById('form-content').innerHTML = `
-    <h2>ግዢን ይፈጽሙ (${name})</h2>
-    <p>የግዢ ቁጥር (Order #): <b>${orderNumber}</b></p>
-    <p><b>ክፍያ ይፈጽሙ (Biniam Girma):</b><br>CBE: 1000233582817 | BOA: 37540676 | Telebirr: 0918427112</p>
-    
-    <form action="https://formspree.io/f/xbdbbpkv" method="POST">
-        <input type="hidden" name="OrderNumber" value="${orderNumber}">
-        <input type="hidden" name="Product" value="${name}">
-        <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:100%; padding:10px; margin-bottom:10px;">
-        <input type="text" name="Address" placeholder="አድራሻ" required style="width:100%; padding:10px; margin-bottom:10px;">
-        <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:100%; padding:10px; margin-bottom:10px;">
-        
-        <input type="text" id="location-input" name="Location" placeholder="መገኛ ቦታ (Google Maps ሊንክ)" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:5px;">
-        <button type="button" onclick="getLocation()" style="width:100%; margin-bottom:15px; padding:10px; background-color:#007bff; color:white; border:none; border-radius:5px;">
-            ራስ-ሰር መገኛዬን ፈልግ
-        </button>
+                </div>
+            `).join('');
+            showPage('products');
+        }
 
-        <button type="submit" id="submit-btn" 
+        const orderNumber = "BGE-" + Math.floor(10000 + Math.random() * 90000);
+        function openOrderForm(name, price) {
+            document.getElementById('form-content').innerHTML = `
+                <h2>ግዢ ይፈጽሙ (${name})</h2>
+                <p>የግዢ ቁጥር (Order #): <b>${orderNumber}</b></p>
+                <p><b>ክፍያ ይፈጽሙ (Biniam Girma):</b><br>CBE: 1000233582817 | BOA: 37540676 | Telebirr: 0918427112</p>
+                <form action="https://formspree.io/f/xbdbbpkv" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="OrderNumber" value="${orderNumber}">
+                <input type="hidden" name="Product" value="${name}">
+                <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:100%; padding:10px; margin-bottom:10px;">
+                <input type="text" name="Address" placeholder="አድራሻ" required style="width:100%; padding:10px; margin-bottom:10px;">
+                <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:100%; padding:10px; margin-bottom:10px;">
+                
+                <button type="submit" id="submit-btn" 
                 onclick="this.innerText='እባክዎ ይጠብቁን...'; this.style.backgroundColor='#888'; this.disabled=true; this.form.submit();"
                 style="width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
-            ግዥ ይፈፅሙ
-        </button>
-    </form>
-    <button onclick="showPage('products')" style="margin-top:10px; padding:10px;">Back Menu</button>
-    `;
-    showPage('form-page');
-}
-
+                ግዥን ይፈፅሙ
+                </button>
+                </form>
+                    
+                </form>
                 <button onclick="showPage('products')" style="margin-top:10px; padding:10px; width:100%;">Back Menu</button>
             `;
             showPage('form-page');
@@ -177,26 +162,6 @@
     s0.parentNode.insertBefore(s1,s0);
     })();
     </script>
-    <script>
-function getLocation() {
-    const locInput = document.getElementById("location-input");
-    if (navigator.geolocation) {
-        locInput.value = "መገኛን በመፈለግ ላይ...";
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                locInput.value = `https://www.google.com/maps?q=${lat},${lon}`;
-            },
-            (error) => {
-                locInput.value = "መገኛን ማግኘት አልተቻለም";
-            }
-        );
-    } else {
-        locInput.value = "መገኛን የሚፈልግ መሳሪያ የለዎትም";
-    }
-}
-</script>
-
+    <!--End of Tawk.to Script-->
 </body>
 </html>
