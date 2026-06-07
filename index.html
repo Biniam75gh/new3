@@ -64,14 +64,24 @@
 <button onclick="showPage('products')" style="width: 100%; padding: 15px; background-color: #f8f9fa; border: 1px solid #ccc; cursor: pointer; font-size: 18px; margin-top: 10px;">
     የምርቶች ዝርዝር ይመልከቱ
 </button>
-<div id="form-page" class="page">
 
-    <div class="bottom-nav">
-        <div class="nav-item" onclick="showPage('home')">🏠<br>Home</div>
-        <div class="nav-item" onclick="showPage('products'); loadProducts();">📦<br>Products</div>
-        <div class="nav-item" onclick="alert('Comingsoon')">📅<br>Bookings</div>
-  <a href="https://wa.me/251918427112" class="nav-item" style="text-decoration:none; color:white;">📞<br>Contact</a>
+<div id="form-page" class="page"></div>
+
+<div class="bottom-nav">
+    <div class="nav-item" onclick="showPage('home')">
+        🏠<br>Home
     </div>
+    <div class="nav-item" onclick="showPage('products'); loadProducts();">
+        📦<br>Products
+    </div>
+    <div class="nav-item" onclick="alert('Comingsoon')">
+        📅<br>Bookings
+    </div>
+    <a href="https://wa.me/251918427112" class="nav-item" style="text-decoration:none; color:inherit;">
+        💬<br>Contact
+    </a>
+</div>
+
 
     <script>
         const productsData = [
