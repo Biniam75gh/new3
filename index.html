@@ -40,15 +40,7 @@
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--brand-color); display: flex; justify-content: space-around; padding: 15px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 9999; }
         .nav-item { text-align: center; font-size: 14px; font-weight: bold; cursor: pointer; color: white; }
         
-        #tawk-chat-container {
-    bottom: 85px !important;    /* ቻት ምልክቷን ወደ ላይ ከፍ ለማድረግ */
-    right: 10px !important;     /* ወደ ግራ ለማዛወር */
-    transform: scale(0.7) !important; /* መጠኑን ይበልጥ ለማሳነስ */
-    transform-origin: bottom right !important;
-}
-
-
-
+        .whatsapp-float { position: fixed; bottom: 80px; right: 20px; background: #25d366; color: white; padding: 15px; border-radius: 50%; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 9998; }
     </style>
 </head>
 <body>
@@ -72,13 +64,9 @@
     <div id="products" class="page"><div id="product-list"></div></div>
     <div id="form-page" class="page"><div class="section-box" id="form-content"></div></div>
 
-    
-    <div class="bottom-nav">
-        <div class="nav-item" onclick="loadProducts(); showPage('products')">
-    <img src="products-icon.png" style="width:24px;">
-    <span>Products</span>
-</div>
 
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="showPage('home')">🏠<br>Home</div>
         <div class="nav-item" onclick="showPage('products'); loadProducts();">📦<br>Products</div>
         <div class="nav-item" onclick="alert('Bookings ገጽ በቅርቡ ይመጣል')">📅<br>Bookings</div>
   <a href="https://wa.me/251918427112" class="nav-item" style="text-decoration:none; color:white;">📞<br>Contact</a>
@@ -132,28 +120,16 @@
             };
 
             content += `
-<form action="https://formspree.io/f/xbdbbpkv" method="POST" style="width: 90%; margin: 0 auto; padding: 10px;">
-    <input type="hidden" name="Service" value="\${serviceName}">
-    
-    <select name="Issue" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
-        \${issues[serviceName].map(item => \`<option value="\${item}">\${item}</option>\`).join('')}
-    </select>
-    
-    <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
-    <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
-    
-    <input type="text" name="Address" id="location-input" placeholder="አድራሻ ወይም መገኛ ቦታ" required style="width: 100%; padding: 10px; margin-bottom: 5px; border-radius: 5px; border: 1px solid #ccc;">
-    
-    <button type="button" onclick="window.open('https://www.google.com/maps', '_blank')" style="width: 100%; padding: 10px; margin-bottom: 15px; background-color: #f8f9fa; border: 1px solid #ccc; cursor: pointer; border-radius: 5px; font-weight: bold;">
-        📍 መገኛ ቦታ ለማግኘት ካርታ ይክፈቱ
-    </button>
-    
-    <button type="submit" style="width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
-        ጥያቄ ይላኩ
-    </button>
-</form>
-`;
-
+                <form action="https://formspree.io/f/xbdbbpkv" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="Service" value="${serviceName}">
+                    <select name="Issue" required style="width:90%; padding:10px; margin-bottom:10px;">
+                        ${issues[serviceName].map(item => `<option value="${item}">${item}</option>`).join('')}
+                    </select><br>
+                    <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
+                    <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
+                    <input type="text" name="Address" placeholder="አድራሻ(ከተማ)" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
+                    <button type="submit" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">sent</button>
+                </form>
                 <button onclick="showPage('home')" style="margin-top:10px; padding:10px; width:100%;">Back Menu</button>
             `;
             document.getElementById('form-content').innerHTML = content;
