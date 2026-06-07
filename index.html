@@ -74,7 +74,11 @@
 
     
     <div class="bottom-nav">
-        <div class="nav-item" onclick="showPage('home')">🏠<br>Home</div>
+        <div class="nav-item" onclick="loadProducts(); showPage('products')">
+    <img src="products-icon.png" style="width:24px;">
+    <span>Products</span>
+</div>
+
         <div class="nav-item" onclick="showPage('products'); loadProducts();">📦<br>Products</div>
         <div class="nav-item" onclick="alert('Bookings ገጽ በቅርቡ ይመጣል')">📅<br>Bookings</div>
   <a href="https://wa.me/251918427112" class="nav-item" style="text-decoration:none; color:white;">📞<br>Contact</a>
