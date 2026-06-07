@@ -128,16 +128,28 @@
             };
 
             content += `
-                <form action="https://formspree.io/f/xbdbbpkv" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="Service" value="${serviceName}">
-                    <select name="Issue" required style="width:90%; padding:10px; margin-bottom:10px;">
-                        ${issues[serviceName].map(item => `<option value="${item}">${item}</option>`).join('')}
-                    </select><br>
-                    <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <input type="text" name="Address" placeholder="አድራሻ(ከተማ)" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <button type="submit" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">sent</button>
-                </form>
+<form action="https://formspree.io/f/xbdbbpkv" method="POST" style="width: 90%; margin: 0 auto; padding: 10px;">
+    <input type="hidden" name="Service" value="\${serviceName}">
+    
+    <select name="Issue" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+        \${issues[serviceName].map(item => \`<option value="\${item}">\${item}</option>\`).join('')}
+    </select>
+    
+    <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
+    <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
+    
+    <input type="text" name="Address" id="location-input" placeholder="አድራሻ ወይም መገኛ ቦታ" required style="width: 100%; padding: 10px; margin-bottom: 5px; border-radius: 5px; border: 1px solid #ccc;">
+    
+    <button type="button" onclick="window.open('https://www.google.com/maps', '_blank')" style="width: 100%; padding: 10px; margin-bottom: 15px; background-color: #f8f9fa; border: 1px solid #ccc; cursor: pointer; border-radius: 5px; font-weight: bold;">
+        📍 መገኛ ቦታ ለማግኘት ካርታ ይክፈቱ
+    </button>
+    
+    <button type="submit" style="width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+        ጥያቄ ይላኩ
+    </button>
+</form>
+`;
+
                 <button onclick="showPage('home')" style="margin-top:10px; padding:10px; width:100%;">Back Menu</button>
             `;
             document.getElementById('form-content').innerHTML = content;
