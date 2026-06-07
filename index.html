@@ -68,15 +68,15 @@
     <div class="bottom-nav">
         <div class="nav-item" onclick="showPage('home')">🏠<br>Home</div>
         <div class="nav-item" onclick="showPage('products'); loadProducts();">📦<br>Products</div>
-        <div class="nav-item" onclick="alert('Bookings ገጽ በቅርቡ ይመጣል')">📅<br>Bookings</div>
+        <div class="nav-item" onclick="alert('Comingsoon')">📅<br>Bookings</div>
   <a href="https://wa.me/251918427112" class="nav-item" style="text-decoration:none; color:white;">📞<br>Contact</a>
     </div>
 
     <script>
         const productsData = [
-            { id: 1, name: "Samsung Galaxy S25 Ultra", price: "120000", image: "1000021034.jpg" },
-            { id: 2, name: "55 ኢንች TV", price: "45000", image: "1000020885.jpg" },
-            { id: 3, name: "65 ኢንች 4K Smart TV", price: "75000", image: "1000020886.jpg" }
+            { id: 1, name: "Samsung Galaxy S25 Ultra", price: "120,000", image: "1000021034.jpg" },
+            { id: 2, name: "55 ኢንች TV", price: "45,000", image: "1000020885.jpg" },
+            { id: 3, name: "65 ኢንች 4K Smart TV", price: "60,000", image: "1000020886.jpg" }
         ];
 
         function loadProducts() {
@@ -85,23 +85,32 @@
                 <div class="section-box">
                     <img src="${p.image}" style="width:100%; border-radius:10px;">
                     <h3>${p.name} - ${p.price} ETB</h3>
-                    <button onclick="openOrderForm('${p.name}', '${p.price}')" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">ግዢን ይፈጽሙ</button>
+                    <button onclick="openOrderForm('${p.name}', '${p.price}')" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">ግዥ ይፈጽሙ</button>
                 </div>
             `).join('');
             showPage('products');
         }
 
+        const orderNumber = "BGE-" + Math.floor(10000 + Math.random() * 90000);
         function openOrderForm(name, price) {
             document.getElementById('form-content').innerHTML = `
-                <h2>ግዢን ይፈጽሙ (${name})</h2>
+                <h2>ግዢ ይፈጽሙ (${name})</h2>
+                <p>የግዢ ቁጥር (Order #): <b>${orderNumber}</b></p>
                 <p><b>ክፍያ ይፈጽሙ (Biniam Girma):</b><br>CBE: 1000233582817 | BOA: 37540676 | Telebirr: 0918427112</p>
                 <form action="https://formspree.io/f/xbdbbpkv" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="Product" value="${name}">
-                    <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <input type="text" name="Address" placeholder="ከተማ እና አድራሻ" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <input type="text" name="Location" placeholder="የቦታ መገኛ (Location Link)" style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <button type="submit" style="width:100%; background:#28a745; color:white; padding:15px; border:none; border-radius:5px;">ግዢ ይፈፅሙ</button>
+                <input type="hidden" name="OrderNumber" value="${orderNumber}">
+                <input type="hidden" name="Product" value="${name}">
+                <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:100%; padding:10px; margin-bottom:10px;">
+                <input type="text" name="Address" placeholder="አድራሻ" required style="width:100%; padding:10px; margin-bottom:10px;">
+                <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:100%; padding:10px; margin-bottom:10px;">
+                
+                <button type="submit" id="submit-btn" 
+                onclick="this.innerText='እባክዎ ይጠብቁን...'; this.style.backgroundColor='#888'; this.disabled=true; this.form.submit();"
+                style="width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                ግዥን ይፈፅሙ
+                </button>
+                </form>
+                    
                 </form>
                 <button onclick="showPage('products')" style="margin-top:10px; padding:10px; width:100%;">Back Menu</button>
             `;
