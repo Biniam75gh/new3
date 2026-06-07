@@ -86,34 +86,35 @@
                     <img src="${p.image}" style="width:100%; border-radius:10px;">
                     <h3>${p.name} - ${p.price} ETB</h3>
                     <button onclick="openOrderForm('${p.name}', '${p.price}')" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">ግዥ ይፈጽሙ</button>
-                </div>
-            `).join('');
-            showPage('products');
-        }
-
-        const orderNumber = "BGE-" + Math.floor(10000 + Math.random() * 90000);
-        function openOrderForm(name, price) {
-            document.getElementById('form-content').innerHTML = `
-                <h2>ግዢ ይፈጽሙ (${name})</h2>
-                <p>የግዢ ቁጥር (Order #): <b>${orderNumber}</b></p>
-                <p><b>ክፍያ ይፈጽሙ (Biniam Girma):</b><br>CBE: 1000233582817 | BOA: 37540676 | Telebirr: 0918427112</p>
-                    <form action="https://formspree.io/f/xbdbbpkv" method="POST" enctype="multipart/form-data">
+                </div>function openOrderForm(name, price) {
+    const orderNumber = "BGE-" + Math.floor(10000 + Math.random() * 90000);
+    document.getElementById('form-content').innerHTML = `
+    <h2>ግዢን ይፈጽሙ (${name})</h2>
+    <p>የግዢ ቁጥር (Order #): <b>${orderNumber}</b></p>
+    <p><b>ክፍያ ይፈጽሙ (Biniam Girma):</b><br>CBE: 1000233582817 | BOA: 37540676 | Telebirr: 0918427112</p>
+    
+    <form action="https://formspree.io/f/xbdbbpkv" method="POST">
         <input type="hidden" name="OrderNumber" value="${orderNumber}">
         <input type="hidden" name="Product" value="${name}">
         <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:100%; padding:10px; margin-bottom:10px;">
         <input type="text" name="Address" placeholder="አድራሻ" required style="width:100%; padding:10px; margin-bottom:10px;">
         <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:100%; padding:10px; margin-bottom:10px;">
         
-        <input type="text" name="Location" placeholder="የመገኛ ቦታ ሊንክ (Google Maps)" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:5px;">
-        <label style="display:block; font-size:12px; margin-bottom:10px;">የስክሪንሾት ፋይል ይምረጡ:</label>
-        <input type="file" name="Screenshot" accept="image/*" style="width:100%; margin-bottom:10px;">
-        
+        <input type="text" id="location-input" name="Location" placeholder="መገኛ ቦታ (Google Maps ሊንክ)" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:5px;">
+        <button type="button" onclick="getLocation()" style="width:100%; margin-bottom:15px; padding:10px; background-color:#007bff; color:white; border:none; border-radius:5px;">
+            ራስ-ሰር መገኛዬን ፈልግ
+        </button>
+
         <button type="submit" id="submit-btn" 
                 onclick="this.innerText='እባክዎ ይጠብቁን...'; this.style.backgroundColor='#888'; this.disabled=true; this.form.submit();"
                 style="width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
-            ግዥን ይፈፅሙ
+            ግዥ ይፈፅሙ
         </button>
     </form>
+    <button onclick="showPage('products')" style="margin-top:10px; padding:10px;">Back Menu</button>
+    `;
+    showPage('form-page');
+}
 
                 <button onclick="showPage('products')" style="margin-top:10px; padding:10px; width:100%;">Back Menu</button>
             `;
