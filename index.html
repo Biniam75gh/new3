@@ -145,9 +145,17 @@
             showPage('form-page');
         }
 
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-            document.getElementById(pageId).classList.add('active-page');
+        function getLocation() {
+            const locInput = document.getElementById("location-input");
+            if (navigator.geolocation) {
+                locInput.value = "መገኛን በመፈለግ ላይ...";
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        locInput.value = `https://www.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}`;
+                    },
+                    (error) => { locInput.value = "መገኛን ማግኘት አልተቻለም"; }
+                );
+            }
         }
     </script>...
     <!--Start of Tawk.to Script-->
