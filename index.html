@@ -2,20 +2,33 @@
 <html lang="am">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BGE Smart Repair</title>
     <style>
         .page { display: none; }
         .active-page { display: block; }
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #f8f9fa; display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid #ccc; }
         .nav-item { text-align: center; cursor: pointer; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
+        .card { padding: 20px; border: 1px solid #ccc; border-radius: 10px; text-align: center; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div id="home" class="page active-page">
+        <div class="header">LOGO</div>
+        <div class="grid">
+            <div class="card" onclick="openRepairForm('TV')">📺<br>TV</div>
+            <div class="card" onclick="openRepairForm('Fridge')">❄️<br>Fridge</div>
+            <div class="card" onclick="openRepairForm('Laundry')">🧺<br>Laundry</div>
+            <div class="card" onclick="openRepairForm('Solar')">☀️<br>Solar</div>
+            <div class="card" onclick="openRepairForm('Mobile')">📱<br>Mobile</div>
+            <div class="card" onclick="openRepairForm('Other')">📦<br>Other</div>
         </div>
+    </div>
 
     <div id="products" class="page">
+        <h2>የምርቶች ዝርዝር</h2>
         <div id="product-list"></div>
     </div>
 
@@ -39,7 +52,12 @@
 
         function loadProducts() {
             const container = document.getElementById('product-list');
-            container.innerHTML = productsData.map(p => `<p>${p.name}</p>`).join('');
+            container.innerHTML = productsData.map(p => `
+                <div style="border-bottom:1px solid #ccc; padding:10px;">
+                    <p>${p.name}</p>
+                    <button onclick="openOrderForm('${p.name}')" style="background:blue; color:white; border:none; padding:8px;">ይግዙ</button>
+                </div>
+            `).join('');
         }
 
         function showPage(pageId) {
@@ -74,20 +92,35 @@
             showPage('form-page');
         }
 
+        function openOrderForm(productName) {
+            document.getElementById('form-content').innerHTML = `
+                <h2>${productName} ግዢ</h2>
+                <form action="https://formspree.io/f/xbdbbpkv" method="POST">
+                    <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:100%; padding:10px; margin-bottom:10px;">
+                    <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:100%; padding:10px; margin-bottom:10px;">
+                    <input type="text" id="location-input" name="Address" placeholder="አድራሻ/መገኛ ቦታ" required style="width:100%; padding:10px; margin-bottom:10px;">
+                    <button type="button" onclick="getLocation()" style="width:100%; padding:10px; margin-bottom:10px;">ራስ-ሰር መገኛዬን ፈልግ</button>
+                    <button type="submit" style="width:100%; padding:15px; background:green; color:white;">ላክ</button>
+                </form>
+                <button onclick="showPage('products')" style="width:100%; padding:10px; margin-top:10px;">Back</button>
+            `;
+            showPage('form-page');
+        }
+
         function getLocation() {
             const locInput = document.getElementById("location-input");
             if (navigator.geolocation) {
                 locInput.value = "መገኛን በመፈለግ ላይ...";
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                        locInput.value = `https://www.google.com/maps?q=$${position.coords.latitude},${position.coords.longitude}`;
+                        locInput.value = `https://www.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}`;
                     },
                     (error) => { locInput.value = "መገኛን ማግኘት አልተቻለም"; }
                 );
             }
         }
     </script>
-
+    
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
@@ -99,5 +132,5 @@
     s0.parentNode.insertBefore(s1,s0);
     })();
     </script>
-    </body>
+</body>
 </html>
