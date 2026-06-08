@@ -2,161 +2,92 @@
 <html lang="am">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BGE Smart Repair</title>
     <style>
-        /* የተዋሃደ ጥቁር ሰማያዊ ቀለም */
-        :root {
-            --brand-color: #001a4d;
-        }
-
-        body { font-family: sans-serif; background-color: #f4f4f4; margin: 0; padding-bottom: 100px; }
-        
-        /* Header style */
-        .header { background: var(--brand-color); color: white; padding: 10px 0 5px 0; text-align: center; border-radius: 0 0 20px 20px; }
-        .logo { width: 100%; max-width: 700px; height: auto; display: block; margin: 0 auto 5px auto; }
-        .call-container { display: flex; justify-content: flex-start; padding-left: 20px; margin-bottom: 15px; }
-        .call-btn { background: #0084ff; color: white; padding: 4px 12px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 11px; }
-        
-        /* Grid እና Card style - ለጽሁፍ እና ለትንሽ አዶዎች ተስተካከለ */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; padding: 10px; }
-        .card { 
-            background: white; 
-            padding: 20px 10px; 
-            border-radius: 20px; 
-            text-align: center; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
-            cursor: pointer; 
-            font-size: 16px; 
-            font-weight: bold; 
-        }
-        .card::before { display: block; font-size: 32px; margin-bottom: 8px; } 
-
-        .page { display: none; padding: 20px; }
+        .page { display: none; }
         .active-page { display: block; }
-        .section-box { background: white; padding: 20px; border-radius: 15px; margin-top: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        
-        /* Bottom Nav style - ከሄደር ጋር አንድ አይነት ቀለም */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--brand-color); display: flex; justify-content: space-around; padding: 15px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 9999; }
-        .nav-item { text-align: center; font-size: 14px; font-weight: bold; cursor: pointer; color: white; }
-        
-        .whatsapp-float { position: fixed; bottom: 80px; right: 20px; background: #25d366; color: white; padding: 15px; border-radius: 50%; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 9998; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #f8f9fa; display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid #ccc; }
+        .nav-item { text-align: center; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <img src="1000020924.png" class="logo" alt="Logo">
-        <div class="call-container"><a href="tel:0918427112" class="call-btn">CALL NOW</a></div>
-    </div>
-
     <div id="home" class="page active-page">
-        <div class="grid">
-            <div class="card" onclick="openRepairForm('TV')">📺<br>TV</div>
-            <div class="card" onclick="openRepairForm('Fridge')">❄️<br>Fridge</div>
-            <div class="card" onclick="openRepairForm('Laundry')">🧺<br>Laundry</div>
-            <div class="card" onclick="openRepairForm('Solar')">☀️<br>Solar</div>
-            <div class="card" onclick="openRepairForm('Mobile')">📱<br>Mobile</div>
-            <div class="card" onclick="openRepairForm('Other')">📦<br>Other</div>
         </div>
+
+    <div id="products" class="page">
+        <div id="product-list"></div>
     </div>
 
-    <div id="products" class="page"><div id="product-list"></div></div>
-    <div id="form-page" class="page"><div class="section-box" id="form-content"></div></div>
-
+    <div id="form-page" class="page">
+        <div id="form-content"></div>
+    </div>
 
     <div class="bottom-nav">
         <div class="nav-item" onclick="showPage('home')">🏠<br>Home</div>
         <div class="nav-item" onclick="showPage('products'); loadProducts();">📦<br>Products</div>
-        <div class="nav-item" onclick="alert('Comingsoon')">📅<br>Bookings</div>
-  <a href="https://wa.me/251918427112" class="nav-item" style="text-decoration:none; color:white;">📞<br>Contact</a>
+        <div class="nav-item" onclick="alert('Coming soon')">📅<br>Bookings</div>
+        <a href="https://wa.me/251918427112" class="nav-item" style="text-decoration:none; color:inherit;">💬<br>Contact</a>
     </div>
 
     <script>
         const productsData = [
-            { id: 1, name: "Samsung Galaxy S25 Ultra", price: "120,000", image: "1000021034.jpg" },
-            { id: 2, name: "55 ኢንች TV", price: "45,000", image: "1000020885.jpg" },
-            { id: 3, name: "65 ኢንች 4K Smart TV", price: "60,000", image: "1000020886.jpg" }
+            { id: 1, name: "Samsung Galaxy S25 Ultra" },
+            { id: 2, name: "55 ኢንች TV" },
+            { id: 3, name: "65 ኢንች 4K Smart TV" }
         ];
 
         function loadProducts() {
             const container = document.getElementById('product-list');
-            container.innerHTML = productsData.map(p => `
-                <div class="section-box">
-                    <img src="${p.image}" style="width:100%; border-radius:10px;">
-                    <h3>${p.name} - ${p.price} ETB</h3>
-                    <button onclick="openOrderForm('${p.name}', '${p.price}')" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">ግዥ ይፈጽሙ</button>
-                </div>
-            `).join('');
-            showPage('products');
-        }
-
-        const orderNumber = "BGE-" + Math.floor(10000 + Math.random() * 90000);
-        function openOrderForm(name, price) {
-    const orderNumber = "BGE-" + Math.floor(10000 + Math.random() * 90000);
-    document.getElementById('form-content').innerHTML = `
-    <h2>ግዢን ይፈጽሙ (${name})</h2>
-    <p>የግዢ ቁጥር (Order #): <b>${orderNumber}</b></p>
-    <p><b>ክፍያ ይፈጽሙ (Biniam Girma):</b><br>CBE: 1000233582817 | BOA: 37540676 | Telebirr: 0918427112</p>
-    
-    <form action="https://formspree.io/f/xbdbbpkv" method="POST">
-        <input type="hidden" name="OrderNumber" value="${orderNumber}">
-        <input type="hidden" name="Product" value="${name}">
-        <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:100%; padding:10px; margin-bottom:10px;">
-        <input type="text" name="Address" placeholder="አድራሻ" required style="width:100%; padding:10px; margin-bottom:10px;">
-        <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:100%; padding:10px; margin-bottom:10px;">
-        
-        <input type="text" id="location-input" name="Location" placeholder="መገኛ ቦታ (ራስ-ሰር ይሞላል)" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:5px;">
-        <button type="button" onclick="getLocation()" style="width:100%; margin-bottom:15px; padding:10px; background-color:#007bff; color:white; border:none; border-radius:5px;">
-            ራስ-ሰር መገኛዬን ፈልግ
-        </button>
-
-        <button type="submit" id="submit-btn" style="width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
-            ግዥን ይፈፅሙ
-        </button>
-    </form>
-    <button onclick="showPage('home')" style="margin-top:10px; padding:10px; width:100%;">Back Menu</button>
-    `;
-    showPage('form-page');
-}
-
-            showPage('form-page');
-        }
-
-        function openRepairForm(serviceName) {
-            let content = `<h2>${serviceName} ጥገና</h2>`;
-            const issues = {
-                'TV': ["ድምፅ ኖሮ ምስል የሌለው", "ቀይ መብራት እየበራ የማይሰራ", "ምስል ኖሮ ድምፅ የሌለው", "ስክሪን ተሰንጥቆ ምንም የማይታይ", "የአንቴና ብልሽት", "ችግሩ ያልተጠቀሰ (ሌላ)"],
-                'Fridge': ["የማይቀዘቅዝ", "ውሃ የሚያፈስ", "ድምፅ የሚያሰማ", "በሩ የማይዘጋ", "አይበራም", "ችግሩ ያልተጠቀሰ (ሌላ)"],
-                'Laundry': ["የማይሽከረከር", "ውሃ የማይሞላ", "የማይለቅ", "ከፍተኛ ድምፅ የሚያሰማ", "የኤሌክትሪክ ብልሽት", "ችግሩ ያልተጠቀሰ (ሌላ)"],
-                'Solar': ["ባትሪ የማይይዝ", "የማይሞላ", "ኢንቨርተር ብልሽት", "የፓናል ችግር", "የኬብል ግንኙነት", "ችግሩ ያልተጠቀሰ (ሌላ)"],
-                'Mobile': ["ስክሪን የተሰበረ", "ቻርጅ የማይይዝ", "ድምፅ የማይሰማ", "ባትሪ የሚያልቅ", "የሶፍትዌር ችግር", "ችግሩ ያልተጠቀሰ (ሌላ)"],
-                'Other': ["የቤት እቃዎች ጥገና", "የኤሌክትሪክ ብልሽት", "ሌላ ችግር"]
-            };
-
-            content += `
-                <form action="https://formspree.io/f/xbdbbpkv" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="Service" value="${serviceName}">
-                    <select name="Issue" required style="width:90%; padding:10px; margin-bottom:10px;">
-                        ${issues[serviceName].map(item => `<option value="${item}">${item}</option>`).join('')}
-                    </select><br>
-                    <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <input type="text" name="Address" placeholder="አድራሻ(ከተማ)" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <button type="submit" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">sent</button>
-                </form>
-                <button onclick="showPage('home')" style="margin-top:10px; padding:10px; width:100%;">Back Menu</button>
-            `;
-            document.getElementById('form-content').innerHTML = content;
-            showPage('form-page');
+            container.innerHTML = productsData.map(p => `<p>${p.name}</p>`).join('');
         }
 
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
             document.getElementById(pageId).classList.add('active-page');
         }
-    </script>...
-    <!--Start of Tawk.to Script-->
+
+        function openRepairForm(serviceName) {
+            const issues = {
+                'TV': ["ድምፅ ኖሮ ምስል የሌለው", "ቀይ መብራት", "ምስል ኖሮ ድምፅ የሌለው", "ሌላ"],
+                'Fridge': ["የማይቀዘቅዝ", "ውሃ የሚያፈስ", "ድምፅ የሚያሰማ", "ሌላ"],
+                'Laundry': ["የማይሽከረከር", "ውሃ የማይሞላ", "ሌላ"],
+                'Solar': ["ባትሪ የማይይዝ", "የማይሞላ", "ሌላ"],
+                'Mobile': ["ስክሪን የተሰበረ", "ቻርጅ የማይይዝ", "ሌላ"],
+                'Other': ["የቤት እቃዎች", "ሌላ"]
+            };
+            
+            document.getElementById('form-content').innerHTML = `
+                <h2>${serviceName} ጥገና</h2>
+                <form action="https://formspree.io/f/xbdbbpkv" method="POST">
+                    <select name="Issue" required style="width:100%; padding:10px; margin-bottom:10px;">
+                        ${issues[serviceName].map(item => `<option value="${item}">${item}</option>`).join('')}
+                    </select>
+                    <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:100%; padding:10px; margin-bottom:10px;">
+                    <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:100%; padding:10px; margin-bottom:10px;">
+                    <input type="text" id="location-input" name="Address" placeholder="አድራሻ/መገኛ ቦታ" required style="width:100%; padding:10px; margin-bottom:10px;">
+                    <button type="button" onclick="getLocation()" style="width:100%; padding:10px; margin-bottom:10px;">ራስ-ሰር መገኛዬን ፈልግ</button>
+                    <button type="submit" style="width:100%; padding:15px; background:green; color:white;">ላክ</button>
+                </form>
+                <button onclick="showPage('home')" style="width:100%; padding:10px; margin-top:10px;">Back</button>
+            `;
+            showPage('form-page');
+        }
+
+        function getLocation() {
+            const locInput = document.getElementById("location-input");
+            if (navigator.geolocation) {
+                locInput.value = "መገኛን በመፈለግ ላይ...";
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        locInput.value = `https://www.google.com/maps?q=$${position.coords.latitude},${position.coords.longitude}`;
+                    },
+                    (error) => { locInput.value = "መገኛን ማግኘት አልተቻለም"; }
+                );
+            }
+        }
+    </script>
+
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
@@ -168,26 +99,5 @@
     s0.parentNode.insertBefore(s1,s0);
     })();
     </script>
-    <!--End of Tawk.to Script-->
-</body>
+    </body>
 </html>
-<script>
-    function getLocation() {
-        const locInput = document.getElementById("location-input");
-        if (navigator.geolocation) {
-            locInput.value = "መገኛን በመፈለግ ላይ...";
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-                    locInput.value = `https://www.google.com/maps?q=${lat},${lon}`;
-                },
-                (error) => {
-                    locInput.value = "መገኛን ማግኘት አልተቻለም";
-                }
-            );
-        } else {
-            locInput.value = "መገኛን የሚፈልግ መሳሪያ የለዎትም";
-        }
-    }
-</script>
