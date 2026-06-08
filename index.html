@@ -61,87 +61,83 @@
         </div>
     </div>
 
-    <div id="products" class="page"><div id="product-list"></div></div>
-    <div id="form-page" class="page"><div class="section-box" id="form-content"></div></div>
+    <div id="products" class="page">
+        <h2>የምርቶች ዝርዝር</h2>
+        <div id="product-list"></div>
+    </div>
 
+    <div id="form-page" class="page">
+        <div id="form-content"></div>
+    </div>
 
     <div class="bottom-nav">
         <div class="nav-item" onclick="showPage('home')">🏠<br>Home</div>
         <div class="nav-item" onclick="showPage('products'); loadProducts();">📦<br>Products</div>
-        <div class="nav-item" onclick="alert('Comingsoon')">📅<br>Bookings</div>
-  <a href="https://wa.me/251918427112" class="nav-item" style="text-decoration:none; color:white;">📞<br>Contact</a>
+        <div class="nav-item" onclick="alert('Coming soon')">📅<br>Bookings</div>
+        <a href="https://wa.me/251918427112" class="nav-item" style="text-decoration:none; color:inherit;">💬<br>Contact</a>
     </div>
 
     <script>
         const productsData = [
-            { id: 1, name: "Samsung Galaxy S25 Ultra", price: "120,000", image: "1000021034.jpg" },
-            { id: 2, name: "55 ኢንች TV", price: "45,000", image: "1000020885.jpg" },
-            { id: 3, name: "65 ኢንች 4K Smart TV", price: "60,000", image: "1000020886.jpg" }
+            { id: 1, name: "Samsung Galaxy S25 Ultra" },
+            { id: 2, name: "55 ኢንች TV" },
+            { id: 3, name: "65 ኢንች 4K Smart TV" }
         ];
 
         function loadProducts() {
             const container = document.getElementById('product-list');
             container.innerHTML = productsData.map(p => `
-                <div class="section-box">
-                    <img src="${p.image}" style="width:100%; border-radius:10px;">
-                    <h3>${p.name} - ${p.price} ETB</h3>
-                    <button onclick="openOrderForm('${p.name}', '${p.price}')" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">ግዥ ይፈጽሙ</button>
+                <div style="border-bottom:1px solid #ccc; padding:10px;">
+                    <p>${p.name}</p>
+                    <button onclick="openOrderForm('${p.name}')" style="background:blue; color:white; border:none; padding:8px;">ይግዙ</button>
                 </div>
             `).join('');
-            showPage('products');
         }
 
-        const orderNumber = "BGE-" + Math.floor(10000 + Math.random() * 90000);
-        function openOrderForm(name, price) {
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+            document.getElementById(pageId).classList.add('active-page');
+        }
+
+        function openRepairForm(serviceName) {
+            const issues = {
+                'TV': ["ድምፅ ኖሮ ምስል የሌለው", "ቀይ መብራት", "ምስል ኖሮ ድምፅ የሌለው", "ሌላ"],
+                'Fridge': ["የማይቀዘቅዝ", "ውሃ የሚያፈስ", "ድምፅ የሚያሰማ", "ሌላ"],
+                'Laundry': ["የማይሽከረከር", "ውሃ የማይሞላ", "ሌላ"],
+                'Solar': ["ባትሪ የማይይዝ", "የማይሞላ", "ሌላ"],
+                'Mobile': ["ስክሪን የተሰበረ", "ቻርጅ የማይይዝ", "ሌላ"],
+                'Other': ["የቤት እቃዎች", "ሌላ"]
+            };
+            
             document.getElementById('form-content').innerHTML = `
-                <h2>ግዢ ይፈጽሙ (${name})</h2>
-                <p>የግዢ ቁጥር (Order #): <b>${orderNumber}</b></p>
-                <p><b>ክፍያ ይፈጽሙ (Biniam Girma):</b><br>CBE: 1000233582817 | BOA: 37540676 | Telebirr: 0918427112</p>
-                <form action="https://formspree.io/f/xbdbbpkv" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="OrderNumber" value="${orderNumber}">
-                <input type="hidden" name="Product" value="${name}">
-                <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:100%; padding:10px; margin-bottom:10px;">
-                <input type="text" name="Address" placeholder="አድራሻ" required style="width:100%; padding:10px; margin-bottom:10px;">
-                <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:100%; padding:10px; margin-bottom:10px;">
-                
-                <button type="submit" id="submit-btn" 
-                onclick="this.innerText='እባክዎ ይጠብቁን...'; this.style.backgroundColor='#888'; this.disabled=true; this.form.submit();"
-                style="width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
-                ግዥን ይፈፅሙ
-                </button>
+                <h2>${serviceName} ጥገና</h2>
+                <form action="https://formspree.io/f/xbdbbpkv" method="POST">
+                    <select name="Issue" required style="width:100%; padding:10px; margin-bottom:10px;">
+                        ${issues[serviceName].map(item => `<option value="${item}">${item}</option>`).join('')}
+                    </select>
+                    <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:100%; padding:10px; margin-bottom:10px;">
+                    <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:100%; padding:10px; margin-bottom:10px;">
+                    <input type="text" id="location-input" name="Address" placeholder="አድራሻ/መገኛ ቦታ" required style="width:100%; padding:10px; margin-bottom:10px;">
+                    <button type="button" onclick="getLocation()" style="width:100%; padding:10px; margin-bottom:10px;">ራስ-ሰር መገኛዬን ፈልግ</button>
+                    <button type="submit" style="width:100%; padding:15px; background:green; color:white;">ላክ</button>
                 </form>
-                    
-                </form>
-                <button onclick="showPage('products')" style="margin-top:10px; padding:10px; width:100%;">Back Menu</button>
+                <button onclick="showPage('home')" style="width:100%; padding:10px; margin-top:10px;">Back</button>
             `;
             showPage('form-page');
         }
 
-        function openRepairForm(serviceName) {
-            let content = `<h2>${serviceName} ጥገና</h2>`;
-            const issues = {
-                'TV': ["ድምፅ ኖሮ ምስል የሌለው", "ቀይ መብራት እየበራ የማይሰራ", "ምስል ኖሮ ድምፅ የሌለው", "ስክሪን ተሰንጥቆ ምንም የማይታይ", "የአንቴና ብልሽት", "ችግሩ ያልተጠቀሰ (ሌላ)"],
-                'Fridge': ["የማይቀዘቅዝ", "ውሃ የሚያፈስ", "ድምፅ የሚያሰማ", "በሩ የማይዘጋ", "አይበራም", "ችግሩ ያልተጠቀሰ (ሌላ)"],
-                'Laundry': ["የማይሽከረከር", "ውሃ የማይሞላ", "የማይለቅ", "ከፍተኛ ድምፅ የሚያሰማ", "የኤሌክትሪክ ብልሽት", "ችግሩ ያልተጠቀሰ (ሌላ)"],
-                'Solar': ["ባትሪ የማይይዝ", "የማይሞላ", "ኢንቨርተር ብልሽት", "የፓናል ችግር", "የኬብል ግንኙነት", "ችግሩ ያልተጠቀሰ (ሌላ)"],
-                'Mobile': ["ስክሪን የተሰበረ", "ቻርጅ የማይይዝ", "ድምፅ የማይሰማ", "ባትሪ የሚያልቅ", "የሶፍትዌር ችግር", "ችግሩ ያልተጠቀሰ (ሌላ)"],
-                'Other': ["የቤት እቃዎች ጥገና", "የኤሌክትሪክ ብልሽት", "ሌላ ችግር"]
-            };
-
-            content += `
-                <form action="https://formspree.io/f/xbdbbpkv" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="Service" value="${serviceName}">
-                    <select name="Issue" required style="width:90%; padding:10px; margin-bottom:10px;">
-                        ${issues[serviceName].map(item => `<option value="${item}">${item}</option>`).join('')}
-                    </select><br>
-                    <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <input type="text" name="Address" placeholder="አድራሻ(ከተማ)" required style="width:90%; padding:10px; margin-bottom:10px;"><br>
-                    <button type="submit" style="width:100%; background:var(--brand-color); color:white; padding:15px; border:none; border-radius:5px;">sent</button>
+        function openOrderForm(productName) {
+            document.getElementById('form-content').innerHTML = `
+                <h2>${productName} ግዢ</h2>
+                <form action="https://formspree.io/f/xbdbbpkv" method="POST">
+                    <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:100%; padding:10px; margin-bottom:10px;">
+                    <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:100%; padding:10px; margin-bottom:10px;">
+                    <input type="text" id="location-input" name="Address" placeholder="አድራሻ/መገኛ ቦታ" required style="width:100%; padding:10px; margin-bottom:10px;">
+                    <button type="button" onclick="getLocation()" style="width:100%; padding:10px; margin-bottom:10px;">ራስ-ሰር መገኛዬን ፈልግ</button>
+                    <button type="submit" style="width:100%; padding:15px; background:green; color:white;">ላክ</button>
                 </form>
-                <button onclick="showPage('home')" style="margin-top:10px; padding:10px; width:100%;">Back Menu</button>
+                <button onclick="showPage('products')" style="width:100%; padding:10px; margin-top:10px;">Back</button>
             `;
-            document.getElementById('form-content').innerHTML = content;
             showPage('form-page');
         }
 
@@ -157,8 +153,8 @@
                 );
             }
         }
-    </script>...
-    <!--Start of Tawk.to Script-->
+    </script>
+    
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
@@ -170,6 +166,5 @@
     s0.parentNode.insertBefore(s1,s0);
     })();
     </script>
-    <!--End of Tawk.to Script-->
 </body>
 </html>
