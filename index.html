@@ -5,18 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BGE Smart Repair</title>
     <style>
-        .page { display: none; }
+        body { font-family: sans-serif; margin: 0; padding-bottom: 60px; }
+        .page { display: none; padding: 20px; }
         .active-page { display: block; }
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #f8f9fa; display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid #ccc; }
         .nav-item { text-align: center; cursor: pointer; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
-        .card { padding: 20px; border: 1px solid #ccc; border-radius: 10px; text-align: center; cursor: pointer; }
+        .card { padding: 15px; border: 1px solid #ccc; margin: 5px; border-radius: 8px; cursor: pointer; text-align: center; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .header { text-align: center; padding: 10px; }
     </style>
 </head>
 <body>
 
     <div id="home" class="page active-page">
-        <div class="header">LOGO</div>
+        <div class="header">
+            <img src="1000020924.png" alt="BGE Logo" style="width: 150px;">
+        </div>
+        <h1>BGE Smart Repair</h1>
         <div class="grid">
             <div class="card" onclick="openRepairForm('TV')">📺<br>TV</div>
             <div class="card" onclick="openRepairForm('Fridge')">❄️<br>Fridge</div>
@@ -25,6 +30,7 @@
             <div class="card" onclick="openRepairForm('Mobile')">📱<br>Mobile</div>
             <div class="card" onclick="openRepairForm('Other')">📦<br>Other</div>
         </div>
+        <button onclick="showPage('products'); loadProducts();" style="width: 100%; padding: 15px; margin-top: 20px;">የምርቶች ዝርዝር ይመልከቱ</button>
     </div>
 
     <div id="products" class="page">
@@ -74,7 +80,6 @@
                 'Mobile': ["ስክሪን የተሰበረ", "ቻርጅ የማይይዝ", "ሌላ"],
                 'Other': ["የቤት እቃዎች", "ሌላ"]
             };
-            
             document.getElementById('form-content').innerHTML = `
                 <h2>${serviceName} ጥገና</h2>
                 <form action="https://formspree.io/f/xbdbbpkv" method="POST">
@@ -84,8 +89,8 @@
                     <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:100%; padding:10px; margin-bottom:10px;">
                     <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:100%; padding:10px; margin-bottom:10px;">
                     <input type="text" id="location-input" name="Address" placeholder="አድራሻ/መገኛ ቦታ" required style="width:100%; padding:10px; margin-bottom:10px;">
-                    <button type="button" onclick="getLocation()" style="width:100%; padding:10px; margin-bottom:10px;">ራስ-ሰር መገኛዬን ፈልግ</button>
-                    <button type="submit" style="width:100%; padding:15px; background:green; color:white;">ላክ</button>
+                    <button type="button" onclick="getLocation()" style="width:100%; padding:10px; margin-bottom:10px; background:#007bff; color:white; border:none;">ራስ-ሰር መገኛዬን ፈልግ</button>
+                    <button type="submit" style="width:100%; padding:15px; background:green; color:white; border:none;">ላክ</button>
                 </form>
                 <button onclick="showPage('home')" style="width:100%; padding:10px; margin-top:10px;">Back</button>
             `;
@@ -99,8 +104,8 @@
                     <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:100%; padding:10px; margin-bottom:10px;">
                     <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:100%; padding:10px; margin-bottom:10px;">
                     <input type="text" id="location-input" name="Address" placeholder="አድራሻ/መገኛ ቦታ" required style="width:100%; padding:10px; margin-bottom:10px;">
-                    <button type="button" onclick="getLocation()" style="width:100%; padding:10px; margin-bottom:10px;">ራስ-ሰር መገኛዬን ፈልግ</button>
-                    <button type="submit" style="width:100%; padding:15px; background:green; color:white;">ላክ</button>
+                    <button type="button" onclick="getLocation()" style="width:100%; padding:10px; margin-bottom:10px; background:#007bff; color:white; border:none;">ራስ-ሰር መገኛዬን ፈልግ</button>
+                    <button type="submit" style="width:100%; padding:15px; background:green; color:white; border:none;">ላክ</button>
                 </form>
                 <button onclick="showPage('products')" style="width:100%; padding:10px; margin-top:10px;">Back</button>
             `;
@@ -120,7 +125,6 @@
             }
         }
     </script>
-    
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
