@@ -171,21 +171,23 @@
     <!--End of Tawk.to Script-->
 </body>
 </html>
-function getLocation() {
-    const locInput = document.getElementById("location-input");
-    if (navigator.geolocation) {
-        locInput.value = "መገኛን በመፈለግ ላይ...";
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                locInput.value = `https://www.google.com/maps?q=${lat},${lon}`;
-            },
-            (error) => {
-                locInput.value = "መገኛን ማግኘት አልተቻለም";
-            }
-        );
-    } else {
-        locInput.value = "መገኛን የሚፈልግ መሳሪያ የለዎትም";
+<script>
+    function getLocation() {
+        const locInput = document.getElementById("location-input");
+        if (navigator.geolocation) {
+            locInput.value = "መገኛን በመፈለግ ላይ...";
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    locInput.value = `https://www.google.com/maps?q=${lat},${lon}`;
+                },
+                (error) => {
+                    locInput.value = "መገኛን ማግኘት አልተቻለም";
+                }
+            );
+        } else {
+            locInput.value = "መገኛን የሚፈልግ መሳሪያ የለዎትም";
+        }
     }
-}
+</script>
