@@ -97,18 +97,15 @@
                 <h2>ግዢ ይፈጽሙ (${name})</h2>
                 <p>የግዢ ቁጥር (Order #): <b>${orderNumber}</b></p>
                 <p><b>ክፍያ ይፈጽሙ (Biniam Girma):</b><br>CBE: 1000233582817 | BOA: 37540676 | Telebirr: 0918427112</p>
+                <p style="color: red; font-weight: bold; margin-top: 10px;">
+                ማሳሰቢያ፡ ግዥ ከፈፀሙ በኋላ Contact ከሚለው ላይ በመግባት በWhatsapp ደረሰኝ ይላኩ።
+                </p>  
                 <form action="https://formspree.io/f/xbdbbpkv" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="OrderNumber" value="${orderNumber}">
                 <input type="hidden" name="Product" value="${name}">
                 <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:100%; padding:10px; margin-bottom:10px;">
                 <input type="text" name="Address" placeholder="አድራሻ" required style="width:100%; padding:10px; margin-bottom:10px;">
                 <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:100%; padding:10px; margin-bottom:10px;">
-                <input type="text" id="location-input" name="Address" placeholder="አድራሻ/መገኛ ቦታ" required class="form-control">
-                <button type="button" class="loc-btn" onclick="getLocation()">ራስ-ሰር መገኛዬን ፈልግ</button>
-                
-                <p style="color: red; font-weight: bold; margin-top: 10px;">
-                ማሳሰቢያ፡ ግዥ ከፈፀሙ በኋላ Contact ከሚለው ውስጥ በWhatsapp ደረሰኝ ይላኩን።
-                </p>
                 
                 <button type="submit" id="submit-btn" 
                 onclick="this.innerText='እባክዎ ይጠብቁን...'; this.style.backgroundColor='#888'; this.disabled=true; this.form.submit();"
@@ -122,26 +119,6 @@
             `;
             showPage('form-page');
         }
-                function getLocation() {
-            const locInput = document.getElementById("location-input");
-            if (navigator.geolocation) {
-                locInput.value = "መገኛን በመፈለግ ላይ...";
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const lat = position.coords.latitude;
-                        const lon = position.coords.longitude;
-                        locInput.value = `https://www.google.com/maps?q=${lat},${lon}`;
-                    },
-                    (error) => { locInput.value = "መገኛን ማግኘት አልተቻለም"; }
-                );
-            } else {
-                locInput.value = "መገኛን የሚፈልግ መሳሪያ የለዎትም";
-            }
-        }
-
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-            document.getElementById(pageId).classList.add('active-page');
 
         function openRepairForm(serviceName) {
             let content = `<h2>${serviceName} ጥገና</h2>`;
