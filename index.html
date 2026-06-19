@@ -103,6 +103,12 @@
                 <input type="text" name="Name" placeholder="ሙሉ ስም" required style="width:100%; padding:10px; margin-bottom:10px;">
                 <input type="text" name="Address" placeholder="አድራሻ" required style="width:100%; padding:10px; margin-bottom:10px;">
                 <input type="tel" name="Phone" placeholder="ስልክ ቁጥር" required style="width:100%; padding:10px; margin-bottom:10px;">
+                <input type="text" id="location-input" name="Address" placeholder="አድራሻ/መገኛ ቦታ" required class="form-control">
+                <button type="button" class="loc-btn" onclick="getLocation()">ራስ-ሰር መገኛዬን ፈልግ</button>
+                
+                <p style="color: red; font-weight: bold; margin-top: 10px;">
+                ማሳሰቢያ፡ ግዥ ከፈፀሙ በኋላ Contact ከሚለው ውስጥ በWhatsapp ደረሰኝ ይላኩን።
+                </p>
                 
                 <button type="submit" id="submit-btn" 
                 onclick="this.innerText='እባክዎ ይጠብቁን...'; this.style.backgroundColor='#888'; this.disabled=true; this.form.submit();"
