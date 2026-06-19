@@ -91,8 +91,52 @@
             showPage('products');
         }
 
-        const orderNumber = "BGE-" + Math.floor(10000 + Math.random() * 90000);
-        function openOrderForm(name, price) {
+ const orderNumber = "BGE-" + Math.floor(10000 + Math.random() * 90000);
+ function openOrderForm(name, price) {
+     // ይህ ፋንክሽን መረጃውን ወደ ዋትሳፕ ይልካል እንዲሁም ማሳሰቢያ ያሳያል
+     window.sendToWhatsApp = function() {
+         const fullName = document.getElementById('name-input').value;
+         const phone = document.getElementById('phone-input').value;
+         const address = document.getElementById('address-input').value;
+         
+         if (!fullName || !phone || !address) {
+             alert("እባክዎ ሁሉንም መረጃዎች ይሙሉ");
+             return;
+         }
+ 
+         // ለደንበኛው የሚታይ ማሳሰቢያ (Notification)
+         alert("ግዢዎ ተመዝግቧል! \nየኦርደር ቁጥርዎ: " + orderNumber + "\n\nእባክዎ ይህንን ቁጥር ይያዙ። አሁን ወደ ዋትሳፕ በመሄድ ደረሰኝ ይላኩ።");
+ 
+         const message = `ሰላም BGE Smart Repair!%0A%0A` +
+                         `አዲስ ግዢ አለኝ።%0A` +
+                         `የኦርደር ቁጥር: ${orderNumber}%0A` +
+                         `ምርት: ${name}%0A` +
+                         `ሙሉ ስም: ${fullName}%0A` +
+                         `ስልክ ቁጥር: ${phone}%0A` +
+                         `አድራሻ: ${address}`;
+         
+         window.open(`https://wa.me/251918427112?text=${message}`, '_blank');
+     };
+ 
+     document.getElementById('form-content').innerHTML = `
+         <h2>ግዢ ይፈጽሙ (${name})</h2>
+         <p>የግዢ ቁጥር (Order #): <b>${orderNumber}</b></p>
+         <p style="color: red; font-weight: bold;">ማሳሰቢያ፡ ግዥ ከፈፀሙ በኋላ ደረሰኝ በዋትሳፕ ይላኩ።</p>
+         
+         <input type="text" id="name-input" placeholder="ሙሉ ስም" required class="form-control">
+         <input type="tel" id="phone-input" placeholder="ስልክ ቁጥር" required class="form-control">
+         <input type="text" id="address-input" placeholder="አድራሻ/መገኛ ቦታ" required class="form-control">
+         
+         <button onclick="sendToWhatsApp()" id="submit-btn" 
+         style="width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top:10px; font-weight:bold;">
+         ግዢን ይፈፅሙ
+         </button>
+         </form>
+         <button onclick="showPage('products')" style="margin-top:10px; padding:10px; width:100%;">Back Menu</button>
+     `;
+     showPage('form-page');
+ }
+ {
             document.getElementById('form-content').innerHTML = `
                 <h2>ግዢ ይፈጽሙ (${name})</h2>
                 <p>የግዢ ቁጥር (Order #): <b>${orderNumber}</b></p>
